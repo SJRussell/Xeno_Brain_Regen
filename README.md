@@ -35,7 +35,7 @@ This repository holds the analysis and figure-generation code for a reanalysis o
 
 ## Figure panels and the scripts that draw them
 
-Script paths in this table are relative to `08_figures/` unless they start with a numbered stage folder. "Typed in" means the script holds fixed values (term lists, gene lists or test statistics) copied from records written by cluster scripts that are not in this repository.
+Script paths in this table are relative to `08_figures/` unless they start with a numbered stage folder. "Typed in" means the script holds fixed values (term lists, gene lists or test statistics) copied from records written by cluster scripts that are not in this repository. (TODO) marks an input written by a script not yet in this repository; see the list below the tables. "v10method" names the clusterProfiler Hallmark GSEA of `03_enrichment/t06_stage_E_enrichment.R`, re-run to keep all 50 gene sets (item 4 of that list).
 
 | Panel | What it shows | Script | Inputs and notes |
 |---|---|---|---|
@@ -43,19 +43,19 @@ Script paths in this table are relative to `08_figures/` unless they start with 
 | 1E | Brain PCA | `figure_rebuild_2026-07/render_fig1_pca.py` | PC scores from `r_panel_scripts/fig1D_brain_pca.R` (homeolog-summed voom expression, 5,000 most variable genes). The axis-label percentages are typed into `render_fig1_pca.py`. |
 | 1F | Blastema PCA | `figure_rebuild_2026-07/render_fig1_pca.py` | PC scores from `r_panel_scripts/fig2C_blast_pca.R`; as 1E. |
 | 2A | Volcano plots, MDT vs ND, 24 HPT and 7 DPT | `figure_rebuild_2026-07/render_fig2.py` (`volcano`) | `de_BRAIN_CT_vs_ND_{24HPA,7DPA}.tsv`, DESeq2 results from `02_differential_expression/t05c_deseq2_wald.R`, exported by `figure_rebuild_2026-07/nibi_export/export_fig_data.R` |
-| 2B | Within-condition volcano plots, 7 DPT vs 24 HPT | `figure_rebuild_2026-07/render_fig2.py` (`volcano`) | `de_BRAIN_{CT,ND}_7DPA_vs_24HPA.tsv` |
-| 2C | Heatmap of MDT temporal DEGs | `revision_2026-09-17/rebuild_figure2.py`, which calls `figures_src/_heatmap.py` | Row order from `brain_heatmap_CTtemporal_DEGs_gene_order.tsv` (written on the cluster, TODO); column order fixed in `_heatmap.CANON_2F_COLS`. `figures_src/fig2f_cttemporal_heatmap.py` is the stand-alone version of this panel. |
-| 2D | Overlap of the two temporal DEG sets | `figure_rebuild_2026-07/render_fig2.py` (`temporal_venn`) | Recomputed from the two temporal DE tables |
+| 2B | Within-condition volcano plots, 7 DPT vs 24 HPT | `figure_rebuild_2026-07/render_fig2.py` (`volcano`) | `de_BRAIN_{CT,ND}_7DPA_vs_24HPA.tsv`; saved as `fig2C_*` and `fig2D_*` |
+| 2C | Heatmap of MDT temporal DEGs | `revision_2026-09-17/rebuild_figure2.py`, which calls `figures_src/_heatmap.py` | Row order from `brain_heatmap_CTtemporal_DEGs_gene_order.tsv` (written on the cluster, TODO); column order fixed in `_heatmap.CANON_2F_COLS`. `figures_src/fig2f_cttemporal_heatmap.py` is the stand-alone version of this panel. Saved as `fig2F_temporal_heatmap.png`. |
+| 2D | Overlap of the two temporal DEG sets | `figure_rebuild_2026-07/render_fig2.py` (`temporal_venn`) | Recomputed from the two temporal DE tables; saved as `fig2E_temporal_venn.png` |
 | Figure 2 layout | Composition | `revision_2026-09-17/rebuild_figure2.py` (imports `rebuild_figures.py`) | |
 | 3A | Hallmark GSEA, 24 HPT | `figure_rebuild_2026-07/render_fig3.py` | `hallmark_nes_BRAIN_24HPT_v10method.tsv` (TODO) |
 | 3B | vwf.L, col4a1.L and col4a2.L expression | `figure_rebuild_2026-07/render_fig3b.py` | Per-homeolog voom expression (`voom_E_BRAIN_primary.tsv`) |
 | 3C | mTORC1 leading-edge heatmap | `figures_src/fig3c_mtorc1_le_heatmap.py` with `_heatmap.py` | Gene list typed in (TODO) |
 | 3D | Neurovascular signature, log2 fold change per timepoint | `figure_rebuild_2026-07/render_fig3d.py` | `nibi_export/neurovascular_signature_table.tsv` (TODO) |
 | 3E | Reactome over-representation | `figure_rebuild_2026-07/render_fig3.py` with `_panels.py` | `reactome_overrep_CTvsND_24HPT.tsv` (TODO) |
-| 3F | Gene-pathway network | `figure_rebuild_2026-07/render_fig3.py`, which calls `fig3f_layout.py`; `drag_fig3f.py` is an interactive layout editor | `reactome_cnet_edges_CTvsND_24HPT.tsv` (TODO); node positions in `panels_png/fig3F_positions.json` when present |
+| 3F | Gene-pathway network | `figure_rebuild_2026-07/render_fig3.py`, which calls `fig3f_layout.py`; `drag_fig3f.py` is an interactive layout editor | `reactome_cnet_edges_CTvsND_24HPT.tsv` (TODO); node positions in `panels_png/fig3F_positions.json` |
 | 4A | Hallmark GSEA, 7 DPT | `figure_rebuild_2026-07/render_fig4.py` (`panel_4A`) | Terms, NES and adjusted P typed in (TODO) |
 | 4B | Heme metabolism running-enrichment plot | `figures_src/fig4b_heme_mountain.py` with `_mountain.py` | Ranks from `de_BRAIN_CT_vs_ND_7DPA.tsv`; gene sets and Entrez map from `tables/brain/gsea_mountain_inputs/` (TODO); NES and FDR from the v10method Hallmark table |
-| 4C | IFN-α running-enrichment plots, 24 HPT and 7 DPT | `figures_src/fig4c_ifn_inversion.py` with `_mountain.py` | As 4B |
+| 4C | IFN-α running-enrichment plots, 24 HPT and 7 DPT | `figures_src/fig4c_ifn_inversion.py` with `_mountain.py` | As 4B, for both timepoints |
 | 4D | MYC targets leading-edge heatmap | `figures_src/fig4d_myc_le_heatmap.py` with `_heatmap.py` | Gene list typed in (TODO) |
 | 4E | Hallmark over-representation in the turquoise module | `figure_rebuild_2026-07/render_fig4.py` (`panel_4E`) | Values typed in (TODO); the test itself is in `04_wgcna/fig5_module_gdf15_rho.R` |
 | 4F | Per-Hallmark NES, 24 HPT vs 7 DPT | `figure_rebuild_2026-07/render_fig4.py` (`panel_4F`) | v10method Hallmark tables (TODO) |
@@ -82,13 +82,13 @@ Script paths in this table are relative to `08_figures/` unless they start with 
 | 9D | Hallmark NES across comparator contrasts | `revision_2026-09-17/rebuild_figures.py` (`grouped9d`, using `render_fig9.COMP`) | *X. laevis* columns from the v10method Hallmark tables (TODO); mouse columns from `supplementary_v9/supplementary_v9_staging/hallmark_50_v9redfix/*_full.tsv`, written by `06_comparators/gen_full_hallmark_nes.R` |
 | Figure 9 layout | Composition | `revision_2026-09-17/rebuild_figures.py` | |
 | S1A | Blastema Hallmark GSEA, 7 DPT | `figure_rebuild_2026-07/render_supp1.py` (`panel_A`) | Terms typed in (TODO) |
-| S1B | Blastema volcano plot with EMT and anti-fibrotic genes | `figure_rebuild_2026-07/render_supp1.py` (`panel_B`) | `de_BLAST_CT_vs_ND_7DPA.tsv`; `blast_LE_genes_per_hallmark_CT_vs_ND_7DPT.tsv` (TODO) |
+| S1B | Blastema volcano plot marking EMT leading-edge and selected fibrosis-associated genes | `figure_rebuild_2026-07/render_supp1.py` (`panel_B`) | `de_BLAST_CT_vs_ND_7DPA.tsv`; `blast_LE_genes_per_hallmark_CT_vs_ND_7DPT.tsv` (TODO) |
 | S1C | Expression of EMT-intersected DEGs | `figure_rebuild_2026-07/render_supp1.py` (`panel_C`) | Gene list typed in (TODO); voom expression |
 | S2A | EMT leading-edge gene expression | `figure_rebuild_2026-07/render_supp1.py` (`panel_traj`, saved as `figS1D_*`) | voom expression; DESeq2 adjusted P for the stars |
 | S2B | Fibrosis and EMT-associated gene expression | `figure_rebuild_2026-07/render_supp1.py` (`panel_traj`, saved as `figS1F_*`) | As S2A |
-| S2C | EMT running-enrichment plot | `figure_rebuild_2026-07/render_supp1.py` (`panel_E`, saved as `figS1E_*`), using `figures_src/_mountain.py` | Blastema ranks from `de_BLAST_CT_vs_ND_7DPA.tsv` |
-| S3 | Limb ISR score by condition and timepoint | `07_isr_exploratory/revision_2026-09-18_ISR/insert_isr.py`, lines 35 to 99 | `results/sample_scores.tsv` and `results/signature_tests.tsv` from `run_analyses.R` |
-| Layout of Figures 1, 3, 4, 5, 8 and Supplementary Figures 1 and 2 | Composition | none | Panels were arranged by hand in PowerPoint. |
+| S2C | EMT running-enrichment plot | `figure_rebuild_2026-07/render_supp1.py` (`panel_E`, saved as `figS1E_*`), using `figures_src/_mountain.py` | Blastema ranks from `de_BLAST_CT_vs_ND_7DPA.tsv`; gene sets and Entrez map from `tables/brain/gsea_mountain_inputs/` (TODO); NES and FDR typed in |
+| S3 | Limb ISR score by condition and timepoint | `07_isr_exploratory/revision_2026-09-18_ISR/insert_isr.py`, lines 35 to 99 | `results/sample_scores.tsv` and `results/signature_tests.tsv` from `run_analyses.R`; also reads `inputs/isr_adapted_coefficients.tsv` and `results/target_genes_original_DESeq2.tsv` |
+| Layout of Figures 1, 3, 4, 5, 8 and Supplementary Figures 1 and 2 | Composition | none | Panels were arranged by hand in PowerPoint; later rounds swapped re-rendered panels into the same positions with deck-building scripts that are not in this repository. |
 
 ## Methods analyses and their scripts
 
@@ -102,19 +102,19 @@ Script paths in this table are relative to `08_figures/` unless they start with 
 | Ortholog mapping, gene-set enrichment and over-representation | `03_enrichment/t06_stage_E_enrichment.R` (clusterProfiler GSEA on Hallmark, gseGO on GO:BP); `t06b_stage_E_fgsea.R` (direct fgsea); `t13_homeolog_sum_gsea.R` and `extract_leading_edge_v7.R` (homeolog-summed GSEA and leading-edge lists for an earlier figure version); `08_figures/figures_src/_mountain.py` (running-enrichment curves) | Re-runs of the Hallmark GSEA and gseGO keeping all tested sets (TODO); Reactome over-representation and gene-concept network (TODO); leading-edge tables used by the panels (TODO) |
 | Co-expression networks (WGCNA) | `04_wgcna/t07_stage_F_wgcna.R`; `04_wgcna/fig5_module_gdf15_rho.R` (eigengene linear models, Hallmark over-representation of module genes, eigengene correlation with gdf15.L) | |
 | Multi-omic factor analysis (MOFA+) | `05_mofa/t08a_stage_G_mofa.R`; `env/setup_install_stage_G_libs.sh` installs MOFA2 | |
-| Brain process-state timeline | `08_figures/figure_rebuild_2026-07/render_fig7.py` (`panel_7A`: mean member NES per cluster and the 25% flag) | GO:BP fgsea across 3,473 terms and GOSemSim clustering (TODO) |
+| Brain process-state timeline | `08_figures/figure_rebuild_2026-07/render_fig7.py` (`panel_7A`: mean member NES per cluster, flagged when at least 25% of the cluster's GO terms reach FDR < 0.05) | GO:BP fgsea across 3,473 terms and GOSemSim clustering (TODO) |
 | Cell-type signature projection | `06_comparators/liao_xenopus_atlas/hD_liao_download.sh`, `hD_liao_analyze.R` | |
 | Axolotl single-cell comparator | `06_comparators/walker_axolotl/`: `hA_walker_download.sh`, `hA_walker_refbuild.sh`, `hA_walker_alevin.sh`; muscimol sample SRR31800874: `hA_walker_dl_muscimol.sh`, `walker_muscimol_recover.sh`, `walker_muscimol_finish.sh`, `walker_alevin_muscimol_only.sh`; `hA_walker_seurat.R` with `walker_seurat_4sample_recluster.sh` (four-sample integration); `walker_marker_remap.R` (marker IDs, UCell scores, Fisher tests). `08_figures/r_panel_scripts/v9/`: `fig6d_walker_cluster4_proportion.R` (cluster proportions and Fisher tests), `fig6e_xlaevis_walker_etv1_ucell.R` (signature on the *X. laevis* samples) | UMAP coordinate export for Figure 9a (TODO) |
 | Mammalian injury comparators | `06_comparators/descalzi_sni/hB_descalzi.R`; `06_comparators/erdei_acute_injury/hC_erdei.R`; `06_comparators/gen_full_hallmark_nes.R` (all 50 Hallmark NES per mouse contrast); `08_figures/r_panel_scripts/v9/build_supplementary.sh` (copies those tables into `supplementary_v9_staging/`); `08_figures/revision_2026-09-17/rebuild_figures.py` (Ward clustering and heatmap) | |
 | Uninjured baseline anchor | `08_figures/figure_rebuild_2026-07/render_fig7.py` (`panel_7C`, `panel_7D`, `panel_7E`); `08_figures/revision_2026-09-17/rebuild_figures.py` (`grouped7b`) | All GSE73419 processing (TODO) |
-| Statistics and reproducibility | Random seeds set in the code: 42 in `t06_stage_E_enrichment.R`, `t06b_stage_E_fgsea.R`, `t13_homeolog_sum_gsea.R`, `gen_full_hallmark_nes.R`, `build_supplementary.R` and `t19_round8.R`; 20260430 for MOFA+ training (`t08a_stage_G_mofa.R`); 20260501 in `hA_walker_seurat.R`; 20260502 in `walker_marker_remap.R`; 20260918 in the ISR `run_analyses.R` | sessionInfo() record for the main R pipeline (TODO) |
+| Statistics and reproducibility | Random seeds set in the code: 42 in `t06_stage_E_enrichment.R`, `t06b_stage_E_fgsea.R`, `t13_homeolog_sum_gsea.R`, `gen_full_hallmark_nes.R`, `build_supplementary.R` and `t19_round8.R`; 20260430 for MOFA+ training (`t08a_stage_G_mofa.R`); 20260501 in `hA_walker_seurat.R`; 20260502 in `walker_marker_remap.R`; 20260918 in the ISR `run_analyses.R`; 7 for the network layout in `fig3f_layout.py` | sessionInfo() record for the main R pipeline (TODO) |
 | Exploratory integrated stress response scoring | `07_isr_exploratory/columbia_analysis_2026-09-18/`: `get_public_sources.py` and `inspect_sources.py` (download the published ISR sources), `prepare_inputs.py` (Xenbase ortholog mapping, reconstruction of the published scores, adapted coefficients), `run_analyses.R` (scores, ordinary linear models, BH adjustment, sensitivity variants), `correlations_and_audit.py`, `verify_and_plot.py` (independent recomputation of every estimate); `revision_2026-09-18_ISR/insert_isr.py` lines 35 to 99 (Supplementary Figure 3) | Preparation of `isr_training_120.csv`, `published_scores.csv` and the Xenbase ortholog table in `sources/` (TODO) |
 
 ## Analyses whose scripts are not in this repository
 
 These scripts ran on the cluster under `/project/def-srussell/nirosha_xeno/` and have not been added here. TODO: add each script, or state where it is available.
 
-1. The GSE73419 uninjured-baseline analysis: trimming and Salmon quantification of GSE73419, joint Salmon quantification of this study's brain libraries, TPM filtering, percentile rank shifts, fgsea on the shift vectors and the eye-sample check (Figure 7b to 7e; tables `gsea_rank_shift_{CT,ND}.tsv`, `rank_shift_genome_wide.tsv`, `tpm_brain_combined.tsv`).
+1. The GSE73419 uninjured-baseline analysis: trimming and Salmon quantification of GSE73419, joint Salmon quantification of this study's brain libraries, TPM filtering, percentile rank shifts, fgsea on the shift vectors and the marker check on paired GSE73419 eye samples (Figure 7b to 7e; tables `gsea_rank_shift_{CT,ND}.tsv`, `rank_shift_genome_wide.tsv`, `tpm_brain_combined.tsv`).
 2. The neurovascular signature table with its within-signature limma test on homeolog-collapsed genes (Figure 3d).
 3. Reactome over-representation and gene-concept network tables (Figure 3e and 3f).
 4. The re-runs of the `t06_stage_E_enrichment.R` Hallmark GSEA and gseGO that keep all tested gene sets: `hallmark_nes_BRAIN_{24HPT,7DPT}_v10method.tsv` (Figures 3a, 4b, 4c, 4f and 9d) and `goBP_FULL_BRAIN_CT_vs_ND_{24HPA,7DPA}.tsv` (Figure 6a).
@@ -140,24 +140,24 @@ These scripts ran on the cluster under `/project/def-srussell/nirosha_xeno/` and
 - This study: raw reads and processed count matrices will be deposited at GEO/SRA. TODO: add the accession.
 - Reference: *X. laevis* v10.1 assembly (XENLA_10.1) with the NCBI RefSeq annotation from Xenbase, downloaded by `t01a_download_xenla_ref.sh`.
 - Comparator datasets: Walker et al. 2025 axolotl brain single-cell RNA-seq (SRR31800874 to SRR31800877); Liao et al. 2022 *X. laevis* brain atlas (GSE195790); Descalzi et al. 2017 mouse spared-nerve injury (GSE91396); Erdei et al. 2025 mouse acute cortical injury (PRJNA1137110); uninjured adult *X. laevis* brain baseline (GSE73419).
-- Gene sets: MSigDB collections through msigdbr in the cluster scripts. The ISR scripts download the MSigDB 2024.1 Hallmark GMT, the published ISR code and the supplementary tables of Smith et al.
+- Gene sets: MSigDB collections through msigdbr in the cluster scripts. The ISR scripts download the MSigDB 2024.1 Hallmark GMT, the Smith et al. article and supplementary tables, and the file list of its code repository; the loadings file in `sources/isr_repo/` was copied by hand (TODO).
 - The intermediate tables that the figure and ISR scripts read (DE tables, expression matrices, enrichment and comparator tables) are not in this repository. TODO: state where they will be available.
 
 ## Running the scripts
 
 ### Cluster scripts
 
-- Each R script has a SLURM wrapper (`.sh`) written for Nibi. The wrappers use the account `def-srussell` and run the R scripts from a copy under `/scratch/srussell/srussell/scripts/`.
-- The scripts use absolute paths: `/project/def-srussell/nirosha_xeno/` for project data and outputs, `/scratch/srussell/srussell/` for working files and logs, and `/home/srussell/Rlibs/4.5` for the user R library. Re-path these before running anywhere else.
+- Each cluster R script except `export_fig_data.R` has a SLURM wrapper (`.sh`) written for Nibi; the stage C to F wrappers use short names (for example, `t04_stage_C.sh` runs `t04_stage_C_qc.R`). The wrappers use the account `def-srussell` and run the R scripts from a copy under `/scratch/srussell/srussell/scripts/`.
+- The scripts use absolute paths: `/project/def-srussell/nirosha_xeno/` for project data and outputs, `/scratch/srussell/srussell/` for working files and logs, `/home/srussell/Rlibs/4.5` for the user R library, and `/home/srussell/projects/def-srussell/nirosha_xeno` in `extract_leading_edge_v7.R`. Re-path these before running anywhere else.
 - Many wrappers also write a short job record to `/project/def-srussell/nirosha_xeno/scorial/01_state/slurm_manifests/`. These lines only record the job and can be removed.
-- Run order: `01_preprocessing_alignment`, then `02_differential_expression`, `03_enrichment`, `04_wgcna` and `05_mofa`. The comparator scripts in `06_comparators` process their datasets independently; `gen_full_hallmark_nes.R` also reads the *X. laevis* enrichment results from `03_enrichment`. The scripts in `08_figures/r_panel_scripts` read the outputs of the earlier stages.
+- Run order: `01_preprocessing_alignment`, then `02_differential_expression`, `03_enrichment`, `04_wgcna` and `05_mofa`. Within `03_enrichment`, run `t06b_stage_E_fgsea.R`, if at all, before `t06_stage_E_enrichment.R`: both write `pathway/all_enrichment_summary.tsv` and `pathway/all_enrichment_results.rds`, and `gen_full_hallmark_nes.R` needs the `t06_stage_E_enrichment.R` version. Run `06_comparators` after `04_qc_normalization` (`hD_liao_analyze.R` reads its VST and sample-metadata outputs), and run `gen_full_hallmark_nes.R` after `t06_stage_E_enrichment.R`, `hB_descalzi.R` and `hC_erdei.R`. The scripts in `08_figures/r_panel_scripts` read the outputs of the earlier stages.
 
 ### Local figure scripts
 
 - Run each script from its own folder, for example `python render_fig5.py` inside `08_figures/figure_rebuild_2026-07/`.
 - The scripts find their inputs relative to `08_figures/`. Before running, place these data folders there: `tables/` (with `brain/`, `blastema/`, `wgcna/`, `mofa/`, `comparators/{liao,walker,gse73419}/` and `sample_metadata.tsv`), `supplementary_v9/supplementary_v9_staging/hallmark_50_v9redfix/`, `manuscript_lock_2026-06-08/tables/{brain,blastema}/` (PCA scores), and `figure_rebuild_2026-07/nibi_export/`, which holds `fig_export/` and `neurovascular_signature_table.tsv`.
 - `figures_src/_style.py` and `figure_rebuild_2026-07/_style.py` are different modules with the same name. Keep each in its folder and run scripts from the two folders as separate processes.
-- `figure_rebuild_2026-07/rebuild_bigfonts_2026-09-06.py render` runs each panel script in its own process with the font scale used for the submitted panels (environment variable `XENO_FS_SCALE`). Running a panel script directly uses scale 1.
+- `figure_rebuild_2026-07/rebuild_bigfonts_2026-09-06.py render` runs 15 panel scripts, each in its own process, with a per-figure font scale (environment variable `XENO_FS_SCALE`); it skips `render_fig1_pca.py` and `render_fig5.py`. Figures 2, 6, 7 and 9 as submitted use the scales set in `revision_2026-09-17/rebuild_figure2.py` and `rebuild_figures.py`. Running a panel script directly uses scale 1.
 - Figures 2, 6, 7 and 9 as submitted come from `revision_2026-09-17/rebuild_figure2.py` (Figure 2) and `revision_2026-09-17/rebuild_figures.py` (Figures 6, 7 and 9). These load the `render_fig*.py` modules from `figure_rebuild_2026-07/`, change some label text and sizes, and write `panels/` and `figures/` inside `revision_2026-09-17/`. They load Arial from `C:/Windows/Fonts`.
 - `figures_src/render_all.py` runs every `fig*.py` in that folder.
 - Panel images are written to `figure_rebuild_2026-07/panels_png/` and `08_figures/figures_png/`.
@@ -165,8 +165,8 @@ These scripts ran on the cluster under `/project/def-srussell/nirosha_xeno/` and
 
 ### ISR scripts
 
-- Keep the folder names `columbia_analysis_2026-09-18` and `revision_2026-09-18_ISR`: `run_analyses.R`, `install_analysis_packages.R` and `insert_isr.py` refer to them by name.
-- Run from `07_isr_exploratory/`, which the scripts treat as the project root. They also read `tables/sample_metadata.tsv`, `tables/{brain,blastema}/voom_E_*_primary.tsv`, `tables/brain/brain_LE_genes_per_hallmark_*.tsv`, `supplementary_v9/supplementary_v9_staging/hallmark_50_v9redfix/` and `figure_rebuild_2026-07/nibi_export/fig_export/de_*.tsv` relative to that folder.
+- Keep the folder name `columbia_analysis_2026-09-18`: `run_analyses.R` and `install_analysis_packages.R` build paths from it, and `insert_isr.py` expects it beside its own folder.
+- Run from `07_isr_exploratory/`, which the scripts treat as the project root. They also read `tables/sample_metadata.tsv`, `tables/{brain,blastema}/voom_E_*_primary.tsv`, `tables/brain/brain_LE_genes_per_hallmark_*.tsv`, `supplementary_v9/supplementary_v9_staging/hallmark_50_v9redfix/` `figure_rebuild_2026-07/nibi_export/fig_export/de_*.tsv`, `tables/{brain,blastema}/persample_gdf15_*.tsv` (read by `correlations_and_audit.py`) and the two `hallmark_nes_BRAIN_*_v10method.tsv` tables (read by `verify_and_plot.py`) relative to that folder. Place or link these data folders in both `08_figures/` and `07_isr_exploratory/`.
 - Order: `get_public_sources.py`, `inspect_sources.py`, preparation of the remaining `sources/` files (TODO), `prepare_inputs.py`, `run_analyses.R`, `correlations_and_audit.py`, `verify_and_plot.py`, then `insert_isr.py`.
 - `inputs/panels.json` holds the marker-gene panels that `prepare_inputs.py` writes and `run_analyses.R` reads.
 - `verify_and_plot.py` checks a checksum of a manuscript draft that is not in this repository and stops at that step without it.
