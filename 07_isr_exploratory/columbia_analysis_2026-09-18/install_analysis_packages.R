@@ -1,0 +1,7 @@
+lib <- normalizePath('columbia_analysis_2026-09-18', winslash='/')
+lib <- file.path(lib, 'R_library')
+dir.create(lib, showWarnings=FALSE)
+.libPaths(c(lib, .libPaths()))
+options(repos=c(CRAN='https://cloud.r-project.org'), timeout=240)
+if (!requireNamespace('BiocManager', quietly=TRUE)) install.packages('BiocManager', lib=lib)
+BiocManager::install(c('limma','edgeR','fgsea','jsonlite'), lib=lib, ask=FALSE, update=FALSE)

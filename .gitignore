@@ -1,0 +1,96 @@
+# Data and results: not part of this repository
+*.tsv
+*.csv
+*.txt
+!07_isr_exploratory/columbia_analysis_2026-09-18/R_sessionInfo.txt
+*.rds
+*.RData
+*.rda
+*.h5
+*.hdf5
+*.h5ad
+*.loom
+*.mtx
+*.xlsx
+*.xls
+*.gz
+*.zip
+*.tar
+*.bam
+*.bai
+*.sam
+*.cram
+*.fastq
+*.fq
+*.sra
+*.gmt
+
+# Images and documents
+*.png
+*.pdf
+*.svg
+*.jpg
+*.jpeg
+*.tif
+*.tiff
+*.eps
+*.docx
+*.doc
+*.pptx
+*.ppt
+
+# JSON written by the scripts; keep the two parameter files
+*.json
+!08_figures/figure_rebuild_2026-07/panels_png/fig3F_positions.json
+!07_isr_exploratory/columbia_analysis_2026-09-18/inputs/panels.json
+
+# Data folders the scripts expect beside the code
+tables/
+supplementary_v9/
+figures_current/
+figures_png/
+manuscript_lock_2026-06-08/
+**/nibi_export/fig_export/
+**/columbia_analysis_2026-09-18/sources/
+**/columbia_analysis_2026-09-18/results/
+**/columbia_analysis_2026-09-18/figures/
+**/revision_2026-09-18_ISR/ISR_assets/
+**/revision_2026-09-17/panels/
+**/revision_2026-09-17/figures/
+
+# Working, archive and internal folders
+R_library/
+_archive/
+_superseded*/
+backup*/
+*_backup*/
+archive_codex/
+_v13_preview/
+scratch/
+*pulls/
+briefs/
+scorial/
+
+# Logs
+logs/
+*.log
+*.out
+*.err
+
+# Credentials and environment files
+.env
+.env.*
+*.pem
+*.key
+
+# Python and R clutter
+__pycache__/
+*.pyc
+.Rhistory
+.Rapp.history
+.Rproj.user/
+.ipynb_checkpoints/
+
+# Operating system files
+.DS_Store
+Thumbs.db
