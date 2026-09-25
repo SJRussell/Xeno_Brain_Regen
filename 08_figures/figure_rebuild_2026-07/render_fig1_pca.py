@@ -5,7 +5,12 @@ deck codex panels, with Stewart's 2026-07-07 edits:
   - MDT relabel (was CT)
   - convex hulls per (treatment, timepoint); ND blue / MDT coral; time by shape
 Data: manuscript_lock_2026-06-08/tables/{brain,blastema}/pca_*_strand_corrected.tsv
-Variance % taken from the approved deck panels (brain 24.5/12.6, blast 46.9/15.9).
+Variance % is computed from the same PCA (2026-09-25): prcomp-equivalent on voom E of the
+homeolog-summed counts (nibi_export/fig_export/voom_E_{BRAIN,BLAST}.tsv), 5,000 most variable
+genes, centered, unscaled, as in fig1D_brain_pca.R / fig2C_blast_pca.R. The recomputed PC1/PC2
+scores must match the plotted score tables. The labels used before this date (brain 24.5/12.6,
+blast 46.9/15.9) were typed in from an older deck and did not match the plotted PCA
+(true values: brain 23.7/12.5, blast 46.5/14.8).
 """
 from pathlib import Path
 import numpy as np, pandas as pd
@@ -17,7 +22,24 @@ import _style as S
 
 BASE = Path(__file__).resolve().parent.parent
 TBL  = BASE / "manuscript_lock_2026-06-08" / "tables"
+VOOM = Path(__file__).resolve().parent / "nibi_export" / "fig_export"
 OUT  = Path(__file__).resolve().parent / "panels_png"; OUT.mkdir(exist_ok=True)
+
+
+def variance_explained(scores, voom_tsv, n_top=5000):
+    """Recompute the plotted PCA (R: prcomp(t(E[top, ]), center=TRUE, scale.=FALSE) on the n_top genes
+    with the largest sample variance) and return % variance of PC1 and PC2 after checking its scores."""
+    E = pd.read_csv(voom_tsv, sep="\t", index_col=0)[scores["sample"]]
+    top = E.var(axis=1, ddof=1).sort_values(ascending=False, kind="mergesort").index[:n_top]
+    X = E.loc[top].T.values
+    X = X - X.mean(axis=0)
+    U, s, _ = np.linalg.svd(X, full_matrices=False)
+    pcs = U * s
+    for k in (0, 1):
+        a, b = pcs[:, k], scores[f"PC{k + 1}"].values
+        assert np.allclose(np.sign(a @ b) * a, b, atol=1e-6), f"PC{k + 1} scores do not match {voom_tsv.name}"
+    ve = s ** 2 / np.sum(s ** 2) * 100
+    return ve[0], ve[1]
 
 # PCA-only palette: Stewart wants a clean red/blue here (the global MDT coral read
 # as "orangeish" on these panels). Blue stays the house ND blue.
@@ -80,10 +102,14 @@ def pca_panel(df, title, varexp, time_shapes, out_fp, figsize):
 FIGSIZE = (3.47, 2.88)
 
 brain = pd.read_csv(TBL / "brain/pca_BRAIN_homeolog_sum_strand_corrected.tsv", sep="\t")
-pca_panel(brain, "Brain", (24.5, 12.6), S.TIME_SHAPE_BRAIN,
+ve_brain = variance_explained(brain, VOOM / "voom_E_BRAIN.tsv")
+print(f"brain PC1 {ve_brain[0]:.2f}%, PC2 {ve_brain[1]:.2f}%")
+pca_panel(brain, "Brain", ve_brain, S.TIME_SHAPE_BRAIN,
           OUT / "fig1E_brain_pca.png", FIGSIZE)
 
 blast = pd.read_csv(TBL / "blastema/pca_BLAST_homeolog_sum_strand_corrected.tsv", sep="\t")
 print("blast times:", sorted(blast["time"].unique()), "treatments:", sorted(blast["treatment"].unique()))
-pca_panel(blast, "Blastema", (46.9, 15.9), S.TIME_SHAPE,
+ve_blast = variance_explained(blast, VOOM / "voom_E_BLAST.tsv")
+print(f"blastema PC1 {ve_blast[0]:.2f}%, PC2 {ve_blast[1]:.2f}%")
+pca_panel(blast, "Blastema", ve_blast, S.TIME_SHAPE,
           OUT / "fig1F_blastema_pca.png", FIGSIZE)

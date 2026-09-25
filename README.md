@@ -40,8 +40,8 @@ Script paths in this table are relative to `08_figures/` unless they start with 
 | Panel | What it shows | Script | Inputs and notes |
 |---|---|---|---|
 | 1A to 1D | Design, sampling, workflow and comparator schematic | none | Hand-drawn schematic. |
-| 1E | Brain PCA | `figure_rebuild_2026-07/render_fig1_pca.py` | PC scores from `r_panel_scripts/fig1D_brain_pca.R` (homeolog-summed voom expression, 5,000 most variable genes). The axis-label percentages are typed into `render_fig1_pca.py`. |
-| 1F | Blastema PCA | `figure_rebuild_2026-07/render_fig1_pca.py` | PC scores from `r_panel_scripts/fig2C_blast_pca.R`; as 1E. |
+| 1E | Brain PCA | `figure_rebuild_2026-07/render_fig1_pca.py` | PC scores from `r_panel_scripts/fig1D_brain_pca.R` (homeolog-summed voom expression, 5,000 most variable genes). The script recomputes the variance explained shown on the axis labels from `nibi_export/fig_export/voom_E_BRAIN.tsv` (TODO) and checks the recomputed scores against the plotted table. |
+| 1F | Blastema PCA | `figure_rebuild_2026-07/render_fig1_pca.py` | PC scores from `r_panel_scripts/fig2C_blast_pca.R`; variance explained from `voom_E_BLAST.tsv`, as 1E. |
 | 2A | Volcano plots, MDT vs ND, 24 HPT and 7 DPT | `figure_rebuild_2026-07/render_fig2.py` (`volcano`) | `de_BRAIN_CT_vs_ND_{24HPA,7DPA}.tsv`, DESeq2 results from `02_differential_expression/t05c_deseq2_wald.R`, exported by `figure_rebuild_2026-07/nibi_export/export_fig_data.R` |
 | 2B | Within-condition volcano plots, 7 DPT vs 24 HPT | `figure_rebuild_2026-07/render_fig2.py` (`volcano`) | `de_BRAIN_{CT,ND}_7DPA_vs_24HPA.tsv`; saved as `fig2C_*` and `fig2D_*` |
 | 2C | Heatmap of MDT temporal DEGs | `revision_2026-09-17/rebuild_figure2.py`, which calls `figures_src/_heatmap.py` | Row order from `brain_heatmap_CTtemporal_DEGs_gene_order.tsv` (written on the cluster, TODO); column order fixed in `_heatmap.CANON_2F_COLS`. `figures_src/fig2f_cttemporal_heatmap.py` is the stand-alone version of this panel. Saved as `fig2F_temporal_heatmap.png`. |
